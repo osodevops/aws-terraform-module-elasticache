@@ -5,11 +5,11 @@ resource "aws_sns_topic" "redis_sns_topic" {
 resource "aws_cloudwatch_metric_alarm" "cache_cpu" {
   count = var.desired_clusters
   alarm_name          = "${var.environment}-${var.cache_identifier}-CACHE-${count.index + 1}-CPUUTILIZATION"
-  alarm_description   = "Redis cluster CPU utilization"
-  comparison_operator = "GreaterThanThreshold"
-  evaluation_periods  = "1"
-  metric_name         = "CPUUtilization"
-  namespace           = "AWS/ElastiCache"
+  alarm_description   = var.alarm_description
+  comparison_operator = var.comparison_operator
+  evaluation_periods  = var.evaluation_periods
+  metric_name         = var.metric_name
+  namespace           = var.namespace
   period              = "300"
   statistic           = "Average"
 

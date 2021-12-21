@@ -92,3 +92,32 @@ variable "snapshot_retention_limit" {
   description = "The rention period to hold the snapshot for."
   default     = 1
 }
+
+variable "alarm_description" {
+  type        = string
+  description = "The alarm description."
+}
+
+variable "comparison_operator" {
+  type         = string
+  description = "Comparison operator."
+  default      = "GreaterThanThreshold"
+}
+
+variable "evaluation_periods" {
+  type        = string
+  description = "The evaluation period."
+  default     = "1"
+}
+
+variable "metric_name" {
+  type        = string
+  description = "The name metric name."
+  default     = "CPUUtilization"
+}
+
+variable "namespace" {
+  type        = string
+  description = "The namespace for the metric."
+  default     = "AWS/ElastiCache"
+}
