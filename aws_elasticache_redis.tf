@@ -20,6 +20,7 @@ resource "aws_elasticache_replication_group" "redis" {
   transit_encryption_enabled    = var.transit_encryption_enabled
   snapshot_retention_limit      = var.snapshot_retention_limit
   snapshot_window               =  var.snapshot_window
+  
   tags = merge(
   var.common_tags, {
     Name        = "${upper(var.environment)}-${upper(var.cache_identifier)}-REDIS-REPLICA"
