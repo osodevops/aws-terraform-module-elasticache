@@ -10,8 +10,8 @@ resource "aws_cloudwatch_metric_alarm" "cache_cpu" {
   evaluation_periods  = var.evaluation_periods
   metric_name         = var.metric_name
   namespace           = var.namespace
-  period              = "300"
-  statistic           = "Average"
+  period              = var.cache_cpu_metric_alarm_period
+  statistic           = var.cache_cpu_metric_alarm_statistic
 
   threshold = var.alarm_cpu_threshold
 

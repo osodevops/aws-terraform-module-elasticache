@@ -121,3 +121,14 @@ variable "namespace" {
   description = "The namespace for the metric."
   default     = "AWS/ElastiCache"
 }
+
+variable "cache_cpu_metric_alarm_period" {
+  type        = string
+  description = "The amount of time for a metric alarm."
+}
+
+variable "cache_cpu_metric_alarm_statistic" {
+  type        = string
+  description = "The statistic for the metric alarm."
+  default     = "Average"
+}
