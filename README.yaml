@@ -60,16 +60,51 @@ github_repo: osodevops/aws-terraform-module-elasticache
 
 # How to use this project
 usage: |-
-  ### Requirements
-  None.
-  ### Role Variables
-  Some information
-  ```yaml
-    ---
+
+  This module deploys and configures ElasticCache and also does the following
+  * creates a CloudWatch alarm to monitor CPU
+  * security group ingress to allow the VPC access via ipv4 CIDR.
+
+  To use this module include the module block below and set your required values.
+
+  You can include this module in a `module_elastic_cache.tf` file.
+  
+  ```hcl
+    module "main" {
+      source = "github.com/osodevops/aws-terraform-module-elasticache"
+
+      environment                           = "P"
+      desired_clusters                      = "1"
+      cache_identifier                      = "storage"
+      automatic_failover_enabled            = false
+      instance_type                         = "cache.t4g.small" 
+      engine_version                        = "5.0.6" 
+      parameter_group_name                  = ""
+      maintenance_window                    = "sun:03:00-sun:04:00"
+      vpc_name                              =  "VPC-NAME"
+      terraform_version                     = 0.12.9
+      aws_region                            = "eu-west-2"
+      snapshot_window                       = "01:00-02:00"
+      alarm_description                     =  "Redis cluster CPU utilization"
+      cache_cpu_metric_alarm_period         = "300"
+      cloudwatch_metric_alarm_description   = "Redis cluster freeable memory"
+
+      common_tags = {
+        Environment                         = "PROD"
+        CostCode                            = "Redis"
+        TF_State                            = "s3_bucket"
+        Tool                                = "Terraform"
+      }
+  }
   ```
-# Example usage
-examples: |-
-  Follow this example
-  ```yaml
-      ---
+  First view the plan and ensure it's correct.
+
+  ```
+  terraform plan
+  ```
+
+  Then apply the plan
+
+  ```
+  terraform apply
   ```
