@@ -59,12 +59,6 @@ variable "vpc_name" {
   description = "The name of the VPC for the elastic cache to be deployed."
 }
 
-variable "terraform_verion" {
-  type        = string
-  description = "The terraform version required."
-  default     = "1.0.4"
-}
-
 variable "aws_region" {
   type        = string
   description = "The aws region for ElasticCache to be deployed in."

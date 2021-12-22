@@ -82,7 +82,6 @@ usage: |-
       parameter_group_name                  = ""
       maintenance_window                    = "sun:03:00-sun:04:00"
       vpc_name                              =  "VPC-NAME"
-      terraform_version                     = 0.12.9
       aws_region                            = "eu-west-2"
       snapshot_window                       = "01:00-02:00"
       alarm_description                     =  "Redis cluster CPU utilization"
