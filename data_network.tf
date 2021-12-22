@@ -9,6 +9,6 @@ data "aws_subnet_ids" "private" {
   vpc_id = data.aws_vpc.prod.id
 
   tags = {
-    Type = "${var.private_subnet_tag}*"
+    Type = var.private_subnet_tag
   }
 }
