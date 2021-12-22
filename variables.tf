@@ -60,7 +60,7 @@ variable "vpc_name" {
 }
 
 variable "terraform_verion" {
-  type        = number
+  type        = string
   description = "The terraform version required."
   default     = "1.0.4"
 }
