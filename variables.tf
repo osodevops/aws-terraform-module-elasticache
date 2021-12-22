@@ -132,3 +132,45 @@ variable "cache_cpu_metric_alarm_statistic" {
   description = "The statistic for the metric alarm."
   default     = "Average"
 }
+
+variable "cloudwatch_metric_alarm_description" {
+  type        = string
+  description = "The description for the cloudwatch alarm."
+
+}
+
+variable "cloudwatch_metric_alarm_comparison_operator" {
+  type        = string
+  description = "The comparison operator for the metric alarm."
+  default     = "LessThanThreshold"
+}
+
+variable "cloudwatch_metric_alarm_evaluation_periods" {
+  type        = string
+  description = "Evaluation period for the alarm."
+  default     = "1"
+}
+
+variable "cloudwatch_metric_alarm_metric_name" {
+  type        = string
+  description = "The name for the metric alarm."
+  default     = "FreeableMemory"
+}
+
+variable "cloudwatch_metric_alarm_namespace" {
+  type        = string
+  description = "the namespace for the metric."
+  default     = "AWS/ElastiCache"
+}
+
+variable "cloudwatch_metric_alarm_period" {
+  type        = string
+  description = "The alarm period for the metric."
+  default     = "60"
+}
+
+variable "cloudwatch_metric_alarm_statistic" {
+  type        = string
+  description = "The statistic for the alarm."
+  default     = "Average"
+}

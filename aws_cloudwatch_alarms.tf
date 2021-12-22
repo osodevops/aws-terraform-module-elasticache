@@ -25,13 +25,13 @@ resource "aws_cloudwatch_metric_alarm" "cache_cpu" {
 resource "aws_cloudwatch_metric_alarm" "cache_memory" {
   count               = var.desired_clusters
   alarm_name          = "${var.environment}-${var.cache_identifier}-CACHE-${count.index + 1}-FREEABLEMEMORY"
-  alarm_description   = "Redis cluster freeable memory"
-  comparison_operator = "LessThanThreshold"
-  evaluation_periods  = "1"
-  metric_name         = "FreeableMemory"
-  namespace           = "AWS/ElastiCache"
-  period              = "60"
-  statistic           = "Average"
+  alarm_description   = var.cloudwatch_metric_alarm_description
+  comparison_operator = var.cloudwatch_metric_alarm_comparison_operator
+  evaluation_periods  = var.cloudwatch_metric_alarm_evaluation_periods
+  metric_name         = var.cloudwatch_metric_alarm_metric_name
+  namespace           = var.cloudwatch_metric_alarm_namespace
+  period              = var.cloudwatch_metric_alarm_period
+  statistic           = var.cloudwatch_metric_alarm_statistic
 
   threshold = var.alarm_memory_threshold
 
