@@ -102,8 +102,194 @@ usage: |-
   terraform plan
   ```
 
+  ### output
+  ```
+  + resource "aws_cloudwatch_metric_alarm" "cache_cpu" {
+      + actions_enabled                       = true
+      + alarm_actions                         = (known after apply)
+      + alarm_description                     = "Redis cluster CPU utilization"
+      + alarm_name                            = "P-storage-CACHE-1-CPUUTILIZATION"
+      + arn                                   = (known after apply)
+      + comparison_operator                   = "GreaterThanThreshold"
+      + dimensions                            = (known after apply)
+      + evaluate_low_sample_count_percentiles = (known after apply)
+      + evaluation_periods                    = 1
+      + id                                    = (known after apply)
+      + metric_name                           = "CPUUtilization"
+      + namespace                             = "AWS/ElastiCache"
+      + period                                = 300
+      + statistic                             = "Average"
+      + tags_all                              = (known after apply)
+      + threshold                             = 75
+      + treat_missing_data                    = "missing"
+    }
+
+  # module.elasticcache.aws_cloudwatch_metric_alarm.cache_memory[0] will be created
+  + resource "aws_cloudwatch_metric_alarm" "cache_memory" {
+      + actions_enabled                       = true
+      + alarm_actions                         = (known after apply)
+      + alarm_description                     = "Redis cluster freeable memory"
+      + alarm_name                            = "P-storage-CACHE-1-FREEABLEMEMORY"
+      + arn                                   = (known after apply)
+      + comparison_operator                   = "LessThanThreshold"
+      + dimensions                            = (known after apply)
+      + evaluate_low_sample_count_percentiles = (known after apply)
+      + evaluation_periods                    = 1
+      + id                                    = (known after apply)
+      + metric_name                           = "FreeableMemory"
+      + namespace                             = "AWS/ElastiCache"
+      + period                                = 60
+      + statistic                             = "Average"
+      + tags_all                              = (known after apply)
+      + threshold                             = 10000000
+      + treat_missing_data                    = "missing"
+    }
+
+  # module.elasticcache.aws_elasticache_replication_group.redis will be created
+  + resource "aws_elasticache_replication_group" "redis" {
+      + apply_immediately              = (known after apply)
+      + arn                            = (known after apply)
+      + at_rest_encryption_enabled     = false
+      + auto_minor_version_upgrade     = true
+      + automatic_failover_enabled     = false
+      + cluster_enabled                = (known after apply)
+      + configuration_endpoint_address = (known after apply)
+      + data_tiering_enabled           = (known after apply)
+      + engine                         = "redis"
+      + engine_version                 = "5.0.6"
+      + engine_version_actual          = (known after apply)
+      + global_replication_group_id    = (known after apply)
+      + id                             = (known after apply)
+      + maintenance_window             = "sun:03:00-sun:04:00"
+      + member_clusters                = (known after apply)
+      + multi_az_enabled               = false
+      + node_type                      = "cache.t4g.small"
+      + notification_topic_arn         = (known after apply)
+      + number_cache_clusters          = 1
+      + parameter_group_name           = (known after apply)
+      + port                           = 6379
+      + primary_endpoint_address       = (known after apply)
+      + reader_endpoint_address        = (known after apply)
+      + replication_group_description  = "App storage cache"
+      + replication_group_id           = "storage"
+      + security_group_ids             = (known after apply)
+      + security_group_names           = (known after apply)
+      + snapshot_retention_limit       = 1
+      + snapshot_window                = "01:00-02:00"
+      + subnet_group_name              = "p-storage-redis-subnet-grp"
+      + tags                           = {
+          + "CostCode"    = "Redis"
+          + "Environment" = "PROD"
+          + "Name"        = "P-STORAGE-REDIS-REPLICA"
+          + "TF_State"    = "s3_bucket"
+          + "Tool"        = "Terraform"
+        }
+      + tags_all                       = {
+          + "CostCode"    = "Redis"
+          + "Environment" = "PROD"
+          + "Name"        = "P-STORAGE-REDIS-REPLICA"
+          + "TF_State"    = "s3_bucket"
+          + "Tool"        = "Terraform"
+        }
+      + transit_encryption_enabled     = false
+
+      + cluster_mode {
+          + num_node_groups         = (known after apply)
+          + replicas_per_node_group = (known after apply)
+        }
+    }
+
+  # module.elasticcache.aws_elasticache_subnet_group.redis_subnet will be created
+  + resource "aws_elasticache_subnet_group" "redis_subnet" {
+      + arn         = (known after apply)
+      + description = "Managed by Terraform"
+      + id          = (known after apply)
+      + name        = "p-storage-redis-subnet-grp"
+      + subnet_ids  = [
+          + "subnet-05e1926ac3a100059",
+          + "subnet-0605a8f8c8e7b8afa",
+          + "subnet-09965aaaaea3d337b",
+        ]
+      + tags_all    = (known after apply)
+    }
+
+  # module.elasticcache.aws_security_group.redis_sg will be created
+  + resource "aws_security_group" "redis_sg" {
+      + arn                    = (known after apply)
+      + description            = "Security group that allows all cache traffic from allowed ips"
+      + egress                 = (known after apply)
+      + id                     = (known after apply)
+      + ingress                = (known after apply)
+      + name                   = "P-REDIS-INT-SG"
+      + name_prefix            = (known after apply)
+      + owner_id               = (known after apply)
+      + revoke_rules_on_delete = false
+      + tags                   = {
+          + "CostCode"    = "Redis"
+          + "Environment" = "PROD"
+          + "Name"        = "P-REDIS-INT-SG"
+          + "TF_State"    = "s3_bucket"
+          + "Tool"        = "Terraform"
+        }
+      + tags_all               = {
+          + "CostCode"    = "Redis"
+          + "Environment" = "PROD"
+          + "Name"        = "P-REDIS-INT-SG"
+          + "TF_State"    = "s3_bucket"
+          + "Tool"        = "Terraform"
+        }
+      + vpc_id                 = "vpc-123456"
+    }
+
+  # module.elasticcache.aws_security_group_rule.bastion_sg_egress will be created
+  + resource "aws_security_group_rule" "bastion_sg_egress" {
+      + cidr_blocks              = [
+          + "0.0.0.0/0",
+        ]
+      + from_port                = 0
+      + id                       = (known after apply)
+      + protocol                 = "-1"
+      + security_group_id        = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 0
+      + type                     = "egress"
+    }
+
+  # module.elasticcache.aws_security_group_rule.redis_sg_ingress_ssh will be created
+  + resource "aws_security_group_rule" "redis_sg_ingress_ssh" {
+      + cidr_blocks              = [
+          + "10.20.0.0/21",
+        ]
+      + from_port                = 6379
+      + id                       = (known after apply)
+      + protocol                 = "tcp"
+      + security_group_id        = (known after apply)
+      + self                     = false
+      + source_security_group_id = (known after apply)
+      + to_port                  = 6379
+      + type                     = "ingress"
+    }
+
+  # module.elasticcache.aws_sns_topic.redis_sns_topic will be created
+  + resource "aws_sns_topic" "redis_sns_topic" {
+      + arn                         = (known after apply)
+      + content_based_deduplication = false
+      + fifo_topic                  = false
+      + id                          = (known after apply)
+      + name                        = "P-REDIS-SNS-TOPIC"
+      + name_prefix                 = (known after apply)
+      + owner                       = (known after apply)
+      + policy                      = (known after apply)
+      + tags_all                    = (known after apply)
+    }
+
+  ```
+
   Then apply the plan
 
   ```
   terraform apply
   ```
+
+
